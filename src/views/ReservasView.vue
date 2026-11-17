@@ -1,7 +1,5 @@
 <template>
   <div class="reservas-view">
-    <UserSwitcher />
-
     <div class="page-header">
       <div>
         <h2 class="page-title">Gestión de Reservas</h2>
@@ -77,7 +75,6 @@ import { onMounted, watch } from 'vue'
 import { useAuthStore } from '../stores/auth'
 import { useReservasStore } from '../stores/reservas'
 import { useSystemStatusStore } from '../stores/systemStatus'
-import UserSwitcher from '../components/usuarios/UserSwitcher.vue'
 import ReservaCard from '../components/reservas/ReservaCard.vue'
 
 const authStore = useAuthStore()

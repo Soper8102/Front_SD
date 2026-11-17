@@ -1,8 +1,5 @@
 <template>
   <div class="viajes-view">
-    <!-- Switcher de Usuario para facilidad de pruebas -->
-    <UserSwitcher />
-
     <div class="page-header">
       <div>
         <h2 class="page-title">Catálogo de Viajes Universitarios</h2>
@@ -77,7 +74,6 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useViajesStore } from '../stores/viajes'
 import { useSystemStatusStore } from '../stores/systemStatus'
-import UserSwitcher from '../components/usuarios/UserSwitcher.vue'
 import ViajeFilter from '../components/viajes/ViajeFilter.vue'
 import ViajeCard from '../components/viajes/ViajeCard.vue'
 import CrearViajeModal from '../components/viajes/CrearViajeModal.vue'
@@ -105,7 +101,6 @@ function abrirModalReserva(viaje) {
 
 function handleReservaCreada() {
   showReservaModal.value = false
-  // Opcional: navegar a mis reservas
   router.push('/reservas')
 }
 

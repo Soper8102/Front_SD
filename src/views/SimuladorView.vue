@@ -33,16 +33,12 @@
       <div class="scenario-card card card-scenario-b" :class="{ 'scenario-active': statusStore.isReservasDown }">
         <div class="scenario-badge badge-offline">Escenario B: Fallo Parcial de Reservas</div>
         <h3>Tolerancia a Fallos y Transparencia</h3>
-        <p>Se simula la caída del contenedor <code>ms_reservas</code> apagándolo en Docker.</p>
+        <p>Simulación del comportamiento cuando el servicio de reservas no se encuentra disponible.</p>
         <ul class="scenario-steps">
           <li>⚡ <strong>Viajes:</strong> Sigue respondiendo con HTTP 200 OK (Alta Disponibilidad)</li>
           <li>⚡ <strong>Reservas:</strong> Gateway intercepta la caída y retorna HTTP 503 amigable</li>
           <li>⚡ <strong>Transparencia:</strong> El usuario puede seguir consultando viajes normalmente</li>
         </ul>
-        <div class="docker-code-box">
-          <code>docker compose stop ms_reservas</code>
-          <button class="copy-btn" @click="copiarComando('docker compose stop ms_reservas')">Copiar</button>
-        </div>
         <div class="scenario-actions">
           <button class="btn btn-danger btn-sm" @click="ejecutarPruebaFalloReserva">
             Probar POST /reservas (Esperado 503)
@@ -70,36 +66,6 @@
           <span class="log-url">{{ log.url }}</span>
           <span class="log-status" :class="getStatusClass(log.status)">HTTP {{ log.status }}</span>
           <pre class="log-detail">{{ log.data }}</pre>
-        </div>
-      </div>
-    </div>
-
-    <!-- Guía de Comandos Docker -->
-    <div class="guide-card card">
-      <h3>🐳 Comandos Útiles de Docker para la Demostración</h3>
-      <div class="commands-list">
-        <div class="cmd-item">
-          <div class="cmd-desc">1. Detener MS Reservas para simular caída (Escenario B):</div>
-          <div class="docker-code-box">
-            <code>docker compose stop ms_reservas</code>
-            <button class="copy-btn" @click="copiarComando('docker compose stop ms_reservas')">Copiar</button>
-          </div>
-        </div>
-
-        <div class="cmd-item">
-          <div class="cmd-desc">2. Reactivar MS Reservas para restaurar el sistema:</div>
-          <div class="docker-code-box">
-            <code>docker compose start ms_reservas</code>
-            <button class="copy-btn" @click="copiarComando('docker compose start ms_reservas')">Copiar</button>
-          </div>
-        </div>
-
-        <div class="cmd-item">
-          <div class="cmd-desc">3. Verificar estado de los 7 contenedores:</div>
-          <div class="docker-code-box">
-            <code>docker compose ps</code>
-            <button class="copy-btn" @click="copiarComando('docker compose ps')">Copiar</button>
-          </div>
         </div>
       </div>
     </div>
@@ -170,11 +136,6 @@ async function ejecutarPruebaFalloReserva() {
 
 function limpiarConsola() {
   logs.value = []
-}
-
-function copiarComando(cmd) {
-  navigator.clipboard.writeText(cmd)
-  notifications.info(`Copiado al portapapeles: "${cmd}"`, 'Comando Copiado')
 }
 </script>
 
@@ -268,33 +229,6 @@ function copiarComando(cmd) {
 .scenario-actions {
   margin-top: auto;
   padding-top: 0.5rem;
-}
-
-.docker-code-box {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #0f172a;
-  color: #38bdf8;
-  padding: 0.4rem 0.75rem;
-  border-radius: 6px;
-  font-family: monospace;
-  font-size: 0.82rem;
-}
-
-.copy-btn {
-  background: #1e293b;
-  border: 1px solid #334155;
-  color: #94a3b8;
-  padding: 0.2rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.7rem;
-  cursor: pointer;
-}
-
-.copy-btn:hover {
-  color: #ffffff;
-  background: #334155;
 }
 
 /* Consola */
@@ -397,24 +331,5 @@ function copiarComando(cmd) {
   font-size: 0.75rem;
   white-space: pre-wrap;
   word-break: break-all;
-}
-
-/* Guía de Comandos */
-.guide-card h3 {
-  font-size: 1.1rem;
-  color: #0f172a;
-  margin-bottom: 1rem;
-}
-
-.commands-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.cmd-desc {
-  font-size: 0.85rem;
-  color: #475569;
-  margin-bottom: 0.3rem;
 }
 </style>

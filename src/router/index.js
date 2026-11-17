@@ -14,12 +14,14 @@ const routes = [
   {
     path: '/viajes',
     name: 'viajes',
-    component: ViajesView
+    component: ViajesView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/reservas',
     name: 'reservas',
-    component: ReservasView
+    component: ReservasView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/simulador',
@@ -36,6 +38,22 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+// Guardia de navegación para proteger rutas
+router.beforeEach((to, from, next) => {
+  const savedUser = localStorage.getItem('uniride_user')
+  const isLoggedIn = !!savedUser
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    // Si intenta acceder a una ruta protegida sin iniciar sesión, redirige al login
+    next({ name: 'login', query: { redirect: to.fullPath } })
+  } else if (to.name === 'login' && isLoggedIn) {
+    // Si ya está autenticado e intenta ir al login, llévalo a viajes
+    next({ name: 'viajes' })
+  } else {
+    next()
+  }
 })
 
 export default router

@@ -14,12 +14,16 @@
       </div>
 
       <div class="navbar-menu">
-        <router-link to="/viajes" class="nav-link">
-          <span class="nav-icon">🗺️</span> Viajes
-        </router-link>
-        <router-link to="/reservas" class="nav-link">
-          <span class="nav-icon">📋</span> Reservas
-        </router-link>
+        <!-- Solo se muestran y permiten cuando se haya iniciado sesión -->
+        <template v-if="authStore.isLoggedIn">
+          <router-link to="/viajes" class="nav-link">
+            <span class="nav-icon">🗺️</span> Viajes
+          </router-link>
+          <router-link to="/reservas" class="nav-link">
+            <span class="nav-icon">📋</span> Reservas
+          </router-link>
+        </template>
+
         <router-link to="/simulador" class="nav-link">
           <span class="nav-icon">🧪</span> Simulador SD
         </router-link>
